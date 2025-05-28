@@ -1,0 +1,103 @@
+# see https://docs.ansible.com/ansible-core/2.18/os_guide/windows_usage.html
+# see https://docs.ansible.com/ansible-core/2.18/os_guide/windows_faq.html#can-i-run-python-modules-on-windows-hosts
+# see https://github.com/ansible-collections/ansible.windows
+
+- name: Windows Example
+  hosts: windows
+  gather_facts: true
+  tasks:
+    - name: Show hidden files
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: Hidden
+        data: 1
+        type: dword
+
+    - name: Show protected operating system files
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: ShowSuperHidden
+        data: 1
+        type: dword
+
+    - name: Show file extensions
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: HideFileExt
+        data: 0
+        type: dword
+
+    - name: Hide the search button
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Search
+        name: SearchboxTaskbarMode
+        data: 0
+        type: dword
+
+    - name: Hide the task view button
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: ShowTaskViewButton
+        data: 0
+        type: dword
+
+    - name: Never combine the taskbar buttons
+      # possible values:
+      #   0: always combine and hide labels (default)
+      #   1: combine when taskbar is full
+      #   2: never combine
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarGlomLevel
+        data: 2
+        type: dword
+
+    - name: Customize the Windows 11 Taskbar
+      when: ansible_distribution_version is version('10.0.22000.0', '>=')
+      block:
+        - name: Align to the left
+          ansible.windows.win_regedit:
+            path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+            name: TaskbarAl
+            data: 0
+            type: dword
+        - name: Hide the Widgets button
+          ansible.windows.win_regedit:
+            path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+            name: TaskbarDa
+            data: 0
+            type: dword
+        - name: Hide the Chat button
+          ansible.windows.win_regedit:
+            path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+            name: TaskbarMn
+            data: 0
+            type: dword
+        - name: Hide the built-in buttons (Edge, Store, etc.)
+          ansible.windows.win_regedit:
+            path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband
+            name: Favorites
+            state: absent
+
+    - name: Display full path in the title bar
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState
+        name: FullPath
+        data: 1
+        type: dword
+
+    - name: Install Chocolatey
+      chocolatey.chocolatey.win_chocolatey:
+        name: chocolatey
+        # see https://community.chocolatey.org/packages/chocolatey
+        # renovate: datasource=nuget:chocolatey depName=chocolatey
+        version: '2.4.3'
+        state: downgrade
+
+    - name: Install Notepad3
+      chocolatey.chocolatey.win_chocolatey:
+        name: notepad3
+        # https://community.chocolatey.org/packages/notepad3
+        # renovate: datasource=nuget:chocolatey depName=notepad3
+        version: '6.23.203.2'
+        state: downgrade
