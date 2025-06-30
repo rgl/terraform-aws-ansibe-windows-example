@@ -1,6 +1,6 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.12.1"
+  required_version = "1.12.2"
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/random
     # see https://github.com/hashicorp/terraform-provider-random
@@ -12,7 +12,7 @@ terraform {
     # see https://github.com/hashicorp/terraform-provider-aws
     aws = {
       source  = "hashicorp/aws"
-      version = "5.98.0"
+      version = "6.0.0"
     }
     # see https://registry.terraform.io/providers/ansible/ansible
     # see https://github.com/ansible/terraform-provider-ansible
