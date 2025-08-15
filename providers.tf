@@ -12,7 +12,7 @@ terraform {
     # see https://github.com/hashicorp/terraform-provider-aws
     aws = {
       source  = "hashicorp/aws"
-      version = "6.0.0"
+      version = "6.9.0"
     }
     # see https://registry.terraform.io/providers/ansible/ansible
     # see https://github.com/ansible/terraform-provider-ansible

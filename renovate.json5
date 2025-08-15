@@ -22,6 +22,7 @@
     // nuget:chocolatey datasource.
     {
       "fileMatch": [
+        "\\.ya?ml$",
         "\\.ps1$",
       ],
       "matchStrings": [
