@@ -153,9 +153,8 @@ resource "aws_instance" "app" {
     http_endpoint = "enabled"
     http_tokens   = "required"
   }
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.app.id
-    device_index         = 0
   }
   root_block_device {
     volume_size = 50 # GB. default is 30 GB, which only leaves ~6 GB free, so bump it.
