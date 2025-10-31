@@ -164,9 +164,9 @@ ansible -vvv -m win_command -a 'whoami /all' windows
 ansible -vvv -m win_shell -a '$FormatEnumerationLimit = -1; dir env: | Sort-Object Name | Format-Table -AutoSize | Out-String -Stream -Width ([int]::MaxValue) | ForEach-Object {$_.TrimEnd()}' windows
 
 # execute the playbook.
-# see https://docs.ansible.com/ansible-core/2.18/os_guide/windows_winrm.html#winrm-limitations
-# see https://docs.ansible.com/ansible-core/2.18/os_guide/windows_usage.html
-# see https://docs.ansible.com/ansible-core/2.18/os_guide/windows_faq.html#can-i-run-python-modules-on-windows-hosts
+# see https://docs.ansible.com/ansible-core/2.19/os_guide/windows_winrm.html#winrm-limitations
+# see https://docs.ansible.com/ansible-core/2.19/os_guide/windows_usage.html
+# see https://docs.ansible.com/ansible-core/2.19/os_guide/intro_windows.html#working-with-windows
 time ansible-playbook playbook.yml #-vvv
 time ansible-playbook playbook.yml --limit app #-vvv
 ```
