@@ -161,6 +161,6 @@ resource "aws_instance" "app" {
     volume_type = "gp3"
   }
   tags = {
-    Name = "example-windows"
+    Name = "${var.name_prefix}-app"
   }
 }
